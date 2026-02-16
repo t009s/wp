@@ -4,94 +4,112 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Website title -->
   <title>WhatsApp Quick Message</title>
 
-  <!-- Favicon (WhatsApp icon) -->
+  <!-- WhatsApp favicon -->
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg">
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b141a;
+      padding: 0;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      min-height: 100dvh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
+      padding: 16px;
     }
 
     .card {
-      background: #202c33;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 400px;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 35px 28px;
+      width: 100%;
+      max-width: 380px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      margin-bottom: 10px;
       font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
     p {
-      color: #aebac1;
       font-size: 14px;
-      margin-bottom: 20px;
+      opacity: 0.8;
+      margin-bottom: 22px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
+      padding: 14px;
+      border-radius: 12px;
       border: none;
       outline: none;
       font-size: 18px;
-      margin-bottom: 15px;
       text-align: center;
-      letter-spacing: 1px;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 0.25);
     }
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
+      border-radius: 12px;
       border: none;
-      border-radius: 8px;
-      background: #25d366;
+      background: linear-gradient(135deg, #25d366, #1ebe5d);
       color: white;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     button:hover {
-      background: #1ebe5d;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
     }
 
     .error {
-      color: #ff6b6b;
+      margin-top: 12px;
       font-size: 13px;
-      margin-top: 10px;
+      color: #ff6b6b;
       display: none;
     }
 
     footer {
-      margin-top: 15px;
+      margin-top: 18px;
       font-size: 12px;
-      color: #8696a0;
-    }
-
-    .wa-icon {
-      width: 18px;
-      height: 18px;
-      fill: white;
+      opacity: 0.7;
     }
   </style>
 </head>
@@ -99,47 +117,55 @@
 
   <div class="card">
     <h1>WhatsApp Quick Message</h1>
-    <p>Enter phone number with country code</p>
+    <p>Enter 10-digit mobile number</p>
 
-    <!-- Numeric keyboard enabled -->
     <input
       id="phone"
       type="tel"
       inputmode="numeric"
       pattern="[0-9]*"
-      placeholder="e.g. 919876543210"
+      maxlength="10"
+      placeholder="9876543210"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
     />
 
-    <button onclick="openWhatsApp()">
-      <!-- WhatsApp SVG icon -->
-      <svg class="wa-icon" viewBox="0 0 24 24">
-        <path d="M20.52 3.48A11.79 11.79 0 0012.05 0C5.51 0 .18 5.33.18 11.87c0 2.09.55 4.13 1.6 5.94L0 24l6.35-1.66a11.83 11.83 0 005.7 1.45h.01c6.54 0 11.87-5.33 11.87-11.87a11.8 11.8 0 00-3.41-8.44zM12.06 21.3a9.4 9.4 0 01-4.8-1.32l-.34-.2-3.77.99 1-3.67-.22-.38a9.38 9.38 0 01-1.44-5.01c0-5.19 4.22-9.41 9.41-9.41 2.51 0 4.86.98 6.64 2.75a9.35 9.35 0 012.76 6.66c0 5.19-4.22 9.41-9.41 9.41zm5.17-7.05c-.28-.14-1.65-.81-1.91-.9-.26-.09-.45-.14-.64.14-.19.28-.73.9-.89 1.08-.16.19-.33.21-.61.07-.28-.14-1.2-.44-2.29-1.41-.85-.76-1.42-1.7-1.59-1.98-.17-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.17.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49h-.55c-.19 0-.49.07-.74.35s-.98.96-.98 2.33c0 1.37 1 2.69 1.14 2.87.14.19 1.96 2.99 4.75 4.19.66.28 1.17.45 1.57.58.66.21 1.26.18 1.73.11.53-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.26-.19-.54-.33z"/>
-      </svg>
-      Open WhatsApp
-    </button>
+    <button onclick="openWhatsApp()">Open WhatsApp</button>
 
-    <div class="error" id="error">
-      Please enter a valid number.
-    </div>
+    <div class="error" id="error">Enter valid 10-digit number</div>
 
-    <footer>Free • No number saved • Works on mobile & desktop</footer>
+    <footer>Made with ❤️ in India</footer>
   </div>
 
   <script>
     function openWhatsApp() {
-      const phone = document.getElementById("phone").value.trim();
-      const error = document.getElementById("error");
+      const phoneInput = document.getElementById("phone").value.trim();
 
-      const valid = /^[0-9]{8,15}$/.test(phone);
+      // Validate exactly 10 digits
+      const valid = /^[0-9]{10}$/.test(phoneInput);
 
       if (!valid) {
-        error.style.display = "block";
+        document.getElementById("error").style.display = "block";
         return;
       }
 
-      error.style.display = "none";
-      window.location.href = `https://wa.me/${phone}`;
+      // Add India country code automatically
+      const fullNumber = "91" + phoneInput;
+
+      window.location.href = "https://wa.me/" + fullNumber;
     }
+
+    // Scroll card into view when keyboard opens on mobile
+    const phoneInputEl = document.getElementById("phone");
+    const card = document.querySelector(".card");
+
+    phoneInputEl.addEventListener("focus", () => {
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
+    });
   </script>
 
 </body>
